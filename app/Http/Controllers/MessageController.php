@@ -21,7 +21,7 @@ class MessageController extends Controller
     {
         $data = [
             'user_id' => $request->user_id,
-            'data' => $request->message,
+            'data' => $request->data,
             'channel' => 'private'
         ];
 
@@ -30,7 +30,7 @@ class MessageController extends Controller
 
         // Публикация в публичный канал
         $publicData = [
-            'data' => $request->message, // Сообщение для публичного канала
+            'data' => $request->data, // Сообщение для публичного канала
             'channel' => 'public'
         ];
         Redis::publish('public-channel', json_encode($publicData));
