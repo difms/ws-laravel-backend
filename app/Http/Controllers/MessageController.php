@@ -25,15 +25,18 @@ class MessageController extends Controller
             'channel' => 'private'
         ];
 
-        // Публикация в приватный канал
-        Redis::publish('private-channel', json_encode($data));
-
-        // Публикация в публичный канал
         $publicData = [
             'data' => $request->data, // Сообщение для публичного канала
             'channel' => 'public'
         ];
-        Redis::publish('public-channel', json_encode($publicData));
+
+        // Публикация в приватный канал
+        Redis::publish('private_channel_' . $request->user_id, json_encode($data));
+
+        Redis::publish('private_work_' . $request->user_id, json_encode($data));
+
+        // Публикация в публичный канал
+        Redis::publish('public_channel', json_encode($publicData));
     }
 
     // public function login(Request $request)
